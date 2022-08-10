@@ -37,9 +37,9 @@ class BinarySearchTree
 
 	def find(value, current = @root)
 		return false if !current
-		return true if current.value = value
-		return find(value, current.left) if value > current.value
-		return find(value, current.find) if value < current.value
+		return true if current.value == value
+		return find(value, current.left) if value < current.value
+		return find(value, current.right) if value > current.value
 	end
 
 	def largest(current = @root)
@@ -66,7 +66,7 @@ class BinarySearchTree
 	def postorder(current = @root)
 		return if (current == nil)
 		postorder(current.left)
-		postorder(current,right)
+		postorder(current.right)
 		puts current.value.to_s
 	end
 
@@ -164,9 +164,9 @@ end
 bst = BinarySearchTree.new(10)
 
 puts "Enter your choice -- Type help to see all commands"
-while (a = gets.chomp)
-	if a == 'help'
-		puts "Commands          -- Description"
+while (choice = gets.chomp)
+	if choice == 'help'
+		puts "Commands          Description"
 		puts "insert            -- to add elements to bst"
 		puts "largest           -- to print the largest element"
 		puts "smallest          -- to print the smallest element"
@@ -179,43 +179,50 @@ while (a = gets.chomp)
 		puts "path              -- to print all path from root to leaf"
 		puts "quit              -- to quit, all elements are stored in a file"
 		puts "load              -- to read input file and insert element in bst"
-	elsif a == 'insert'
+	elsif choice == 'insert'
 		puts "enter a value"
-		b = gets.chomp.to_i
-		bst.insert(b)
-	elsif a == 'preorder'
+		value = gets.chomp.to_i
+		bst.insert(value)
+	elsif choice == 'preorder'
 		bst.preorder
-	elsif a == 'postorder'
+	elsif choice == 'postorder'
 		bst.postorder
-	elsif a == 'inorder'
+	elsif choice == 'inorder'
 		bst.inorder
-	elsif a == 'level_order'
+	elsif choice == 'level_order'
 		bst.level_order
-	elsif a == 'largest'
-		bst.largest
-	elsif a == 'smallest'
-		bst.smallest
-	elsif a == 'search'
+	elsif choice == 'largest'
+		max = bst.largest
+		puts max.value
+	elsif choice == 'smallest'
+		min bst.smallest
+		puts min.value
+	elsif choice == 'search'
 		puts "Enter element to check"
-		b = gets.chomp.to_i
-		bst.find(b)
-	elsif a == 'remove'
+		element = gets.chomp.to_i
+		bool = bst.find(element)
+		if bool == true
+			puts "Element exists"
+		else
+			puts "Element does not Exist"
+		end
+	elsif choice == 'remove'
 		puts "Enter element you want to remove"
-		b = gets.chomp.to_i
-		bst.delete(b, nil)
-	elsif a == 'path'
+		element = gets.chomp.to_i
+		bst.delete(element, nil)
+	elsif choice == 'path'
 		bst.root_to_leaf
-	elsif a == 'quit'
+	elsif choice == 'quit'
 		bst.store_elements
 		File.write("Elements.txt", "#{bst.data}")
 		break
-	elsif a == 'load'
+	elsif choice == 'load'
 		puts "Enter the name of file you want take input from"
-		b = gets.chomp.to_s
-		File.foreach(b){|input|
+		filename = gets.chomp.to_s
+		File.foreach(filename){|input|
 		bst.insert(input.to_i)}	
 	else 
 		puts "Invalid command, Please try again"
 	end
-	puts "Enter new choice or press quit to exit"
+	puts "Enter new choice or type quit to exit"
 end
