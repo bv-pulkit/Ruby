@@ -162,18 +162,6 @@ class Node
 end
 
 bst = BinarySearchTree.new(10)
-#bst.insert(11)
-#bst.insert(9)
-#bst.insert(5)
-#bst.insert(7)
-#bst.insert(18)
-#bst.insert(17)
-#bst.insert(24)
-#bst.delete(18,nil)
-#puts "Inorder"
-#bst.inorder
-#bst.root_to_leaf()
-
 
 puts "Enter your choice -- Type help to see all commands"
 while (a = gets.chomp)
