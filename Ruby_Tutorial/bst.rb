@@ -1,34 +1,37 @@
+require_relative '../modules/choice_constant.rb'
+
 class BinarySearchTree
 	attr_accessor :root, :data
 		
-	def initialize value
+	def initialize
 		@root = nil
 	end
 
 	def insert(value)
 		new_node = Node.new(value)
-
 		if !root
 			@root = new_node
-			return self
+			return
 		end
-
 		current = @root
 		while current do
-			return nil if current.value == value
-			if (value > current.value)
-				if !current.right
-					current.right = new_node
-					break
-				else
+			if current.value == value
+				puts "This value already exists"
+				return nil
+			end
+			if value > current.value
+				if current.right
 					current = current.right
+				else
+					current.right = new_node
+					return
 				end
 			else
-				if !current.left
-					current.left = new_node
-					break
-				else
+				if current.left
 					current = current.left
+				else
+					current.left = new_node
+					return
 				end
 			end
 		end
@@ -57,31 +60,44 @@ class BinarySearchTree
 	end
 	
 	def preorder(current = @root)
-		return if (current == nil)
-		puts current.value.to_s
+		return if current.nil?
+		puts current.value
 		preorder(current.left)
 		preorder(current.right)
 	end
 
 	def postorder(current = @root)
-		return if (current == nil)
+		return if current.nil?
 		postorder(current.left)
 		postorder(current.right)
-		puts current.value.to_s
+		puts current.value
 	end
 
 	def inorder(current = @root)
-		return if (current == nil)
+		return if current.nil?
 		inorder(current.left)
-		puts current.value.to_s
+		puts current.value
 		inorder(current.right)
 	end
 
 	def level_order(current = @root)
-		return if (current == nil)
-		puts current.value.to_s
-		level_order(current.left)
-		level_order(current.right)
+		result = []
+		return result if current.nil?
+		queue = []
+		queue << current
+		until queue.empty?
+			level_size = queue.length
+			level = []
+			level_size.times do
+				node = queue.shift
+				level << node.value
+				queue << node.left unless node.left.nil?
+				queue << node.right unless node.right.nil?
+			end
+			result << level
+		end
+		print result
+		puts ''
 	end
 
 	def data
@@ -90,37 +106,35 @@ class BinarySearchTree
 
 	def store_elements(current = @root)
 		return if (current == nil)
-		data << current.value.to_i
-		store_elements(current.left)
-		store_elements(current.right)
+		data << self.preorder
 	end
 
-	def delete(current = @root, value, parent)
-		if (root ==  nil)
+	def delete(parent, value, current = @root)
+		if @root.nil?
 			return root
-		elsif (value < current.value)
-			delete(current.left, value, current)
-		elsif (value > current.value)
-			delete(current.right, value, current)
+		elsif value < current.value
+			delete(current, value, current.left)
+		elsif value > current.value
+			delete(current, value, current.right)
 		else
 		#case 1 if node has no child
-			if current.left == nil && current.right == nil
+			if current.left.nil? && current.right.nil?
 				if value == parent.value
 					current = nil
-				elsif (value < parent.value)
+				elsif value < parent.value
 					parent.left = nil
 				else
 					parent.right = nil
 				end
 		#case 2 if the node has a single child
-			elsif current.left == nil
-				if (value < parent.value)
+			elsif current.left.nil?
+				if value < parent.value
 					parent.left = current.right
 				else
 					parent.right = current.right
 				end
-			elsif current.right == nil
-				if (value < parent.value)
+			elsif current.right.nil?
+				if value < parent.value
 					parent.left = current.left
 				else
 					parent.right = current.left
@@ -141,88 +155,90 @@ class BinarySearchTree
 		if current.left == nil && current.right == nil
 			path_collection << path.dup
 			print path
-			puts "path is"
+			puts ''
 			return
 		end
-		root_to_leaf(current.left, path, path_collection)
-		path.pop
-		root_to_leaf(current.right, path , path_collection)
+		if @root.left
+		 root_to_leaf(current.left, path, path_collection)
+		 path.pop
+		end
+		root_to_leaf(current.right, path, path_collection)
 	end
-
 end
 
 class Node
 	attr_accessor :left, :right, :value
 
-	def initialize(left = nil, right = nil, value)
+	def initialize(value, left = nil, right = nil)
 		@left = left
 		@right = right
 		@value = value
 	end
 end
 
-bst = BinarySearchTree.new(10)
+bst = BinarySearchTree.new()
 
 puts "Enter your choice -- Type help to see all commands"
 while (choice = gets.chomp)
 	if choice == 'help'
 		puts "Commands          Description"
-		puts "insert            -- to add elements to bst"
-		puts "largest           -- to print the largest element"
-		puts "smallest          -- to print the smallest element"
-		puts "inorder           -- to print the Inorder"
-		puts "postorder         -- to print the Postorder"
-		puts "level_order       -- to print the Levelorder"
-		puts "preorder          -- to print the preorder"
-		puts "search            -- to search if a element is present"
-		puts "remove            -- to remove an element"
-		puts "path              -- to print all path from root to leaf"
-		puts "quit              -- to quit, all elements are stored in a file"
-		puts "load              -- to read input file and insert element in bst"
-	elsif choice == 'insert'
+		puts "1                 -- to add elements to bst"
+		puts "2                 -- to print the largest element"
+		puts "3                 -- to print the smallest element"
+		puts "4                 -- to print the Inorder"
+		puts "5                 -- to print the Postorder"
+		puts "6                 -- to print the Levelorder"
+		puts "7                 -- to print the preorder"
+		puts "8                 -- to search if a element is present"
+		puts "9                 -- to remove an element"
+		puts "10                -- to print all path from root to leaf"
+		puts "11                -- to quit, all elements are stored in a file"
+		puts "12                -- to read input file and insert element in bst"
+	elsif choice == ChoiceConstants::INSERT
 		puts "enter a value"
-		value = gets.chomp.to_i
+		value = gets.to_i
 		bst.insert(value)
-	elsif choice == 'preorder'
+	elsif choice == ChoiceConstants::PREORDER
 		bst.preorder
-	elsif choice == 'postorder'
+	elsif choice == ChoiceConstants::POSTORDER
 		bst.postorder
-	elsif choice == 'inorder'
+	elsif choice == ChoiceConstants::INORDER
 		bst.inorder
-	elsif choice == 'level_order'
+	elsif choice == ChoiceConstants::LEVEL_ORDER 
 		bst.level_order
-	elsif choice == 'largest'
+	elsif choice == ChoiceConstants::LARGEST 
 		max = bst.largest
 		puts max.value
-	elsif choice == 'smallest'
-		min bst.smallest
+	elsif choice == ChoiceConstants::SMALLEST 
+		min = bst.smallest
 		puts min.value
-	elsif choice == 'search'
+	elsif choice == ChoiceConstants::SEARCH 
 		puts "Enter element to check"
-		element = gets.chomp.to_i
+		element = gets.to_i
 		bool = bst.find(element)
-		if bool == true
+		if bool
 			puts "Element exists"
 		else
 			puts "Element does not Exist"
 		end
-	elsif choice == 'remove'
+	elsif choice == ChoiceConstants::REMOVE
 		puts "Enter element you want to remove"
-		element = gets.chomp.to_i
-		bst.delete(element, nil)
-	elsif choice == 'path'
+		element = gets.to_i
+		bst.delete(nil, element)
+	elsif choice == ChoiceConstants::PATH
 		bst.root_to_leaf
-	elsif choice == 'quit'
+	elsif choice == ChoiceConstants::QUIT
 		bst.store_elements
+		File.write("Elements.txt", "PreOrder")
 		File.write("Elements.txt", "#{bst.data}")
 		break
-	elsif choice == 'load'
+	elsif choice == ChoiceConstants::LOAD
 		puts "Enter the name of file you want take input from"
 		filename = gets.chomp.to_s
-		File.foreach(filename){|input|
-		bst.insert(input.to_i)}	
+		File.foreach(filename){ |input| bst.insert(input.to_i) }	
 	else 
-		puts "Invalid command, Please try again"
+		puts "Invalid choice, Please try again"
+	#rescue puts "Error! Binary Search Tree is empty"
 	end
-	puts "Enter new choice or type quit to exit"
+	puts "Enter new choice or type 11 to exit"
 end
