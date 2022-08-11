@@ -1,6 +1,8 @@
+require_relative '../linklist.rb'
+
 class BinarySearchTree
 	attr_accessor :root, :data
-		
+
 	def initialize value
 		@root = nil
 	end
@@ -55,7 +57,7 @@ class BinarySearchTree
 			current = current.left
 		end
 	end
-	
+
 	def preorder(current = @root)
 		return if (current == nil)
 		puts current.value.to_s
@@ -103,7 +105,7 @@ class BinarySearchTree
 		elsif (value > current.value)
 			delete(current.right, value, current)
 		else
-		#case 1 if node has no child
+			#case 1 if node has no child
 			if current.left == nil && current.right == nil
 				if value == parent.value
 					current = nil
@@ -112,7 +114,7 @@ class BinarySearchTree
 				else
 					parent.right = nil
 				end
-		#case 2 if the node has a single child
+				#case 2 if the node has a single child
 			elsif current.left == nil
 				if (value < parent.value)
 					parent.left = current.right
@@ -125,7 +127,7 @@ class BinarySearchTree
 				else
 					parent.right = current.left
 				end
-		#case 3 if node has 2 childs
+				#case 3 if node has 2 childs
 			else
 				@minval = self.smallest(current)
 				temp = @minval.value
@@ -162,67 +164,128 @@ class Node
 end
 
 bst = BinarySearchTree.new(10)
+ll = LinkedList.new(10)
 
-puts "Enter your choice -- Type help to see all commands"
-while (choice = gets.chomp)
-	if choice == 'help'
-		puts "Commands          Description"
-		puts "insert            -- to add elements to bst"
-		puts "largest           -- to print the largest element"
-		puts "smallest          -- to print the smallest element"
-		puts "inorder           -- to print the Inorder"
-		puts "postorder         -- to print the Postorder"
-		puts "level_order       -- to print the Levelorder"
-		puts "preorder          -- to print the preorder"
-		puts "search            -- to search if a element is present"
-		puts "remove            -- to remove an element"
-		puts "path              -- to print all path from root to leaf"
-		puts "quit              -- to quit, all elements are stored in a file"
-		puts "load              -- to read input file and insert element in bst"
-	elsif choice == 'insert'
-		puts "enter a value"
-		value = gets.chomp.to_i
-		bst.insert(value)
-	elsif choice == 'preorder'
-		bst.preorder
-	elsif choice == 'postorder'
-		bst.postorder
-	elsif choice == 'inorder'
-		bst.inorder
-	elsif choice == 'level_order'
-		bst.level_order
-	elsif choice == 'largest'
-		max = bst.largest
-		puts max.value
-	elsif choice == 'smallest'
-		min bst.smallest
-		puts min.value
-	elsif choice == 'search'
-		puts "Enter element to check"
-		element = gets.chomp.to_i
-		bool = bst.find(element)
-		if bool == true
-			puts "Element exists"
+puts "Type '1' to create a LL ,'2' for BST"
+data_structure = gets.chomp.to_i
+if data_structure == 1
+	puts "Insert values into Linked List seperated by ' ' e.g. '2 3 5'"
+	input = gets.chomp.to_s
+	value = input.split
+	value.each{|temp|
+		ll.insert(temp.to_i)}
+	puts "Enter your choice -- Type help to see all commands"
+	while (choice = gets.chomp)
+		if choice == 'help'
+			puts "Commands          Description"
+			puts "insert            -- To add elements to LinkedList"
+			puts "insert_after      -- To insert after specific target"
+			puts "search            -- To search if an element exists or not"
+			puts "remove            -- To delete an element from LinkedList"
+			puts "reverse           -- To reverse the LinkedList"
+			puts "print             -- To print the LinkedList"
+			puts "quit              -- To quit"
+		elsif choice == 'insert'
+			puts 'Enter a value'
+			value = gets.chomp.to_i
+			ll.insert(value)
+		elsif choice == 'insert_after'
+			puts "Enter target value you want to insert after"
+			target = gets.chomp.to_i
+			puts "Enter value you want to insert"
+			value = gets.chomp.to_i
+			ll.insert_after(target,value)
+		elsif choice == 'search'
+			puts "Enter element to search"
+			value = gets.chomp.to_i
+			if ll.find(value) == false
+				puts "Value does not exists"
+			else
+				puts "Value exists"
+			end
+		elsif choice == 'remove'
+			puts "Enter value you want to delete"
+			value = gets.chomp.to_i
+			ll.delete(value)
+		elsif choice == 'reverse'
+			ll.reverse
+		elsif choice == 'print'
+			ll.print
+		elsif choice == 'quit'
+			break
 		else
-			puts "Element does not Exist"
+			puts "Invalid command"
 		end
-	elsif choice == 'remove'
-		puts "Enter element you want to remove"
-		element = gets.chomp.to_i
-		bst.delete(element, nil)
-	elsif choice == 'path'
-		bst.root_to_leaf
-	elsif choice == 'quit'
-		bst.store_elements
-		File.write("Elements.txt", "#{bst.data}")
-		break
-	elsif choice == 'load'
-		puts "Enter the name of file you want take input from"
-		filename = gets.chomp.to_s
-		File.foreach(filename){|input|
-		bst.insert(input.to_i)}	
-	else 
-		puts "Invalid command, Please try again"
+		puts "Enter new command, Type 'quit' to exist"
 	end
-	puts "Enter new choice or type quit to exit"
+
+elsif data_structure == 2
+	puts "Insert values into BST seperated by ' ' e.g. '2 3 5'"
+	input = gets.chomp.to_s
+	value = input.split
+	value.each{|temp|
+		bst.insert(temp.to_i)}
+	puts "Enter your choice -- Type help to see all commands"
+	while (choice = gets.chomp)
+		if choice == 'help'
+			puts "Commands          Description"
+			puts "insert            -- to add elements to bst"
+			puts "largest           -- to print the largest element"
+			puts "smallest          -- to print the smallest element"
+			puts "inorder           -- to print the Inorder"
+			puts "postorder         -- to print the Postorder"
+			puts "level_order       -- to print the Levelorder"
+			puts "preorder          -- to print the preorder"
+			puts "search            -- to search if a element is present"
+			puts "remove            -- to remove an element"
+			puts "path              -- to print all path from root to leaf"
+			puts "quit              -- to quit, all elements are stored in a file"
+			puts "load              -- to read input file and insert element in bst"
+		elsif choice == 'insert'
+			puts "enter a value"
+			value = gets.chomp.to_i
+			bst.insert(value)
+		elsif choice == 'preorder'
+			bst.preorder
+		elsif choice == 'postorder'
+			bst.postorder
+		elsif choice == 'inorder'
+			bst.inorder
+		elsif choice == 'level_order'
+			bst.level_order
+		elsif choice == 'largest'
+			max = bst.largest
+			puts max.value
+		elsif choice == 'smallest'
+			min bst.smallest
+			puts min.value
+		elsif choice == 'search'
+			puts "Enter element to check"
+			element = gets.chomp.to_i
+			bool = bst.find(element)
+			if bool == true
+				puts "Element exists"
+			else
+				puts "Element does not Exist"
+			end
+		elsif choice == 'remove'
+			puts "Enter element you want to remove"
+			element = gets.chomp.to_i
+			bst.delete(element, nil)
+		elsif choice == 'path'
+			bst.root_to_leaf
+		elsif choice == 'quit'
+			bst.store_elements
+			File.write("Elements.txt", "#{bst.data}")
+			break
+		elsif choice == 'load'
+			puts "Enter the name of file you want take input from"
+			filename = gets.chomp.to_s
+			File.foreach(filename){|input|
+				bst.insert(input.to_i)}	
+		else 
+			puts "Invalid command, Please try again"
+		end
+			puts "Enter new choice or type quit to exit"
+	end
 end
