@@ -105,8 +105,10 @@ class BinarySearchTree
 	end
 
 	def store_elements(current = @root)
-		return if (current == nil)
-		data << self.preorder
+		return if current.nil?
+		data << current.value
+		preorder(current.left)
+		preorder(current.right)
 	end
 
 	def delete(parent, value, current = @root)
@@ -178,9 +180,9 @@ end
 
 bst = BinarySearchTree.new()
 
-puts "Enter your choice -- Type help to see all commands"
-while (choice = gets.chomp)
-	if choice == 'help'
+puts "Enter your choice -- Type 0 to see all commands"
+while (choice = gets.to_i)
+	if choice == ChoiceConstants::HELP
 		puts "Commands          Description"
 		puts "1                 -- to add elements to bst"
 		puts "2                 -- to print the largest element"
