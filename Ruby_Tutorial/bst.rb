@@ -82,8 +82,7 @@ class BinarySearchTree
 	def level_order(current = @root)
 		result = []
 		return result if current.nil?
-		queue = []
-		queue << current
+		queue = [current]
 		until queue.empty?
 			level_size = queue.length
 			level = []
@@ -95,13 +94,13 @@ class BinarySearchTree
 			end
 			result << level
 		end
-		return result
+		result
 	end
 
 	def delete(parent, value, current = @root)
-		if @root.nil?
-			puts "Value does not exist"
-			return root
+		if current.nil?
+			raise "ELement doess not exist"
+			return
 		elsif value < current.value
 			delete(current, value, current.left)
 		elsif value > current.value
@@ -137,13 +136,17 @@ class BinarySearchTree
 			else
 				@minval = self.smallest(current)
 				temp = @minval.value
-				delete(temp, nil)
+				delete(nil, temp)
 				current.value = temp
 			end
 		end
 	end
 
 	def root_to_leaf(current = @root, path = [], path_collection = [])
+		if @root.nil?
+			raise "Tree is empty, cannot print path"
+			return
+		end
 		return if current.nil?
 		path << current.value
 		if current.left.nil? && current.right.nil?
@@ -153,26 +156,32 @@ class BinarySearchTree
 			return
 		end
 		if @root.left
-		 root_to_leaf(current.left, path, path_collection)
-		 path.pop
+			root_to_leaf(current.left, path, path_collection)
+			path.pop
 		end
 		root_to_leaf(current.right, path, path_collection)
 	end
 
+
+		CHOICE_DESCRIPTION = {}
+		def self.add_choice_description(id,desc)
+			CHOICE_DESCRIPTION[id] = desc
+			id
+		end
+
 	module Choice
-		HELP         = 0
-		INSERT       = 1
-		LARGEST      = 2
-		SMALLEST     = 3
-		INORDER      = 4
-		POSTORDER    = 5
-		LEVEL_ORDER  = 6
-		PREORDER     = 7
-		SEARCH       = 8
-		REMOVE       = 9
-		PATH         = 10
-		QUIT         = 11
-		LOAD         = 12
+		HELP = BinarySearchTree.add_choice_description(0, "Type 0 to see all commands")
+		INSERT =  BinarySearchTree.add_choice_description(1, "To insert a value")
+		LARGEST =  BinarySearchTree.add_choice_description(2, "To find rhe largest element")
+		SMALLEST =  BinarySearchTree.add_choice_description(3, "To find the smallest value")
+		INORDER = BinarySearchTree.add_choice_description(4, "To print the Inorder")
+		POSTORDER = BinarySearchTree.add_choice_description(5, "To print rhe Postorder")
+		LEVEL_ORDER = BinarySearchTree.add_choice_description(6, "To print the level order")
+		PREORDER = BinarySearchTree.add_choice_description(7, "To print the Postorder")
+		SEARCH = BinarySearchTree.add_choice_description(8, "To search if an element is present")
+		REMOVE = BinarySearchTree.add_choice_description(9, "To remove a specific element")
+		PATH = BinarySearchTree.add_choice_description(10, "To print all pathn from root to leaf")
+		QUIT = BinarySearchTree.add_choice_description(11, "To quit, all elements are stored in a file")
+		LOAD = BinarySearchTree.add_choice_description(12, "To read input from a file and insert elements into a BST")
 	end
 end
-
