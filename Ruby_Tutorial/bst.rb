@@ -160,10 +160,10 @@ class BinarySearchTree
 	end
 
 	module Choice
-  	HELP         = 0
-	  INSERT       = 1
-	  LARGEST      = 2
-	  SMALLEST     = 3
+		HELP         = 0
+		INSERT       = 1
+		LARGEST      = 2
+		SMALLEST     = 3
 		INORDER      = 4
 		POSTORDER    = 5
 		LEVEL_ORDER  = 6
