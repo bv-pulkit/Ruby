@@ -162,12 +162,11 @@ class BinarySearchTree
 		root_to_leaf(current.right, path, path_collection)
 	end
 
-
-		CHOICE_DESCRIPTION = {}
-		def self.add_choice_description(id,desc)
-			CHOICE_DESCRIPTION[id] = desc
-			id
-		end
+	CHOICE_DESCRIPTION = {}
+	def self.add_choice_description(id,desc)
+		CHOICE_DESCRIPTION[id] = desc
+		id
+	end
 
 	module Choice
 		HELP = BinarySearchTree.add_choice_description(0, "Type 0 to see all commands")

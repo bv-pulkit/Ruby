@@ -12,7 +12,7 @@ if ds_type == 1
 		begin
 			if BinarySearchTree::Choice::HELP == choice
 				puts "Commands -- Description"
-				BinarySearchTree::CHOICE_DESCRIPTION.each do |choice,desc|
+				BinarySearchTree::CHOICE_DESCRIPTION.each do |choice, desc|
 					puts "#{choice} -- #{desc}"
 				end
 			elsif BinarySearchTree::Choice::INSERT == choice
