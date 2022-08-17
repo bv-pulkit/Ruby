@@ -1,4 +1,4 @@
-require_relative 'node.rb'
+require_relative 'bst_node.rb'
 
 class BinarySearchTree
 	attr_accessor :root, :data
@@ -8,7 +8,7 @@ class BinarySearchTree
 	end
 
 	def insert(value)
-		new_node = Node.new(value)
+		new_node = BstNode.new(value)
 		if !root
 			@root = new_node
 			return
