@@ -4,7 +4,7 @@ require_relative "./linked_list.rb"
 bst = BinarySearchTree.new()
 ll = LinkedList.new()
 
-puts "Select your Data Structure. Type '1' for BST '2' for LinkedList"
+puts "Select your Data Structure. Type '1' for BST, '2' for LinkedList"
 ds_type = gets.to_i
 if ds_type == 1
 	puts "Enter your choice -- Type 0 to see all commands"
@@ -124,8 +124,7 @@ elsif ds_type == 2
 				puts "Invalid choice, Please try again"
 			end
 			puts "Enter new choice or type #{LinkedList::Choice::QUIT} to exit"
-		rescue => e
-			puts e.message
+		rescue
 			puts "Enter new choice or type  #{LinkedList::Choice::QUIT} to exit"
 		end
 	end

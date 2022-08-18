@@ -35,6 +35,9 @@ class LinkedList
 	end
 
 	def find(value)
+		if @head.nil?
+			return false
+		end
 		node = @head
 		return node if node.value == value
 		while (node = node.next)
@@ -44,6 +47,10 @@ class LinkedList
 	end
 
 	def delete(value)
+		if @head.nil?
+			puts "Value does not exist in Linked List"
+			return
+		end
 		node = @head
 		if node.value == value
 			@head = @head.next
@@ -57,10 +64,14 @@ class LinkedList
 			end
 			node = node.next
 		end
-		puts "value does not exist in linked list"
+		puts "value does not exist in Linked List"
 	end
 
 	def print
+		if @head.nil?
+			puts "Linked List is Empty"
+			return
+		end
 		node = @head
 		puts node.value
 		puts node.value while node = node.next
