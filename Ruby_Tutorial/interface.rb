@@ -85,20 +85,20 @@ if ds_type == 1
 	end
 
 elsif ds_type == 2
- puts "Enter your choice -- Type 0 to see all commands"
-  while (choice = gets.to_i)
-    begin
-      if LinkedList::Choice::HELP == choice
-        puts "Commands -- Description"
-        LinkedList::CHOICE_DESCRIPTION.each do |choice,desc|
-          puts "#{choice} -- #{desc}"
-        end
-      elsif LinkedList::Choice::INSERT == choice
-        puts "enter a value"
-        value = gets.to_i
-        ll.insert(value)
-      elsif LinkedList::Choice::INSERT_AFTER == choice
-        puts "Enter the target value you want to insert after"
+	puts "Enter your choice -- Type 0 to see all commands"
+	while (choice = gets.to_i)
+		begin
+			if LinkedList::Choice::HELP == choice
+				puts "Commands -- Description"
+				LinkedList::CHOICE_DESCRIPTION.each do |choice,desc|
+					puts "#{choice} -- #{desc}"
+				end
+			elsif LinkedList::Choice::INSERT == choice
+				puts "enter a value"
+				value = gets.to_i
+				ll.insert(value)
+			elsif LinkedList::Choice::INSERT_AFTER == choice
+				puts "Enter the target value you want to insert after"
 				target = gets.to_i
 				puts "Enter the value to want to insert"
 				value = gets.to_i

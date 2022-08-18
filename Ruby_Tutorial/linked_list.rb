@@ -9,9 +9,9 @@ class LinkedList
 
 	def insert(value)
 		if @head
-			find_tail.next = Node.new(value)
+			find_tail.next = LinkedListNode.new(value)
 		else
-			@head = Node.new(value)
+			@head = LinkedListNode.new(value)
 		end
 	end
 
@@ -22,7 +22,7 @@ class LinkedList
 			return
 		end
 		old_next = target_node.next
-		target_node.next = Node.new(value)
+		target_node.next = LinkedListNode.new(value)
 		target_node.next.next = old_next
 	end
 
