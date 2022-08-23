@@ -23,17 +23,17 @@ class LinkedList
 		end
 	end
 
-  def find(value)
-    if @head.nil?
-      return false
-    end
+	def find(value)
+		if @head.nil?
+			return false
+		end
 		node = @head
-				while (node)
-					return node if node.value == value
-					node = node.next
-				end
-				return false
-			end
+		while (node)
+			return node if node.value == value
+			node = node.next
+		end
+		return false
+	end
 
 	def insert_after(target, value)
 		target_node = find(target)
