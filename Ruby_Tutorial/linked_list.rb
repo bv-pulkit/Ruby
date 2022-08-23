@@ -7,6 +7,14 @@ class LinkedList
 		@head = nil
 	end
 
+	def find_tail
+		node = @head
+		while (node)
+			return node if !node.next
+			node = node.next
+		end
+	end
+
 	def insert(value)
 		if @head
 			find_tail.next = LinkedListNode.new(value)
@@ -15,35 +23,27 @@ class LinkedList
 		end
 	end
 
+  def find(value)
+    if @head.nil?
+      return false
+    end
+    node = @head
+		while (node)
+			return node if node.value == value
+			node = node.next
+		end
+		return false
+	end
+
 	def insert_after(target, value)
 		target_node = find(target)
 		unless target_node
 			puts "Target does not exist"
 			return
 		end
-		old_next = target_node.next
+		prev_node_next = target_node.next
 		target_node.next = LinkedListNode.new(value)
-		target_node.next.next = old_next
-	end
-
-	def find_tail
-		node = @head
-		return node if !node.next
-		while (node = node.next)
-			return node if !node.next
-		end
-	end
-
-	def find(value)
-		if @head.nil?
-			return false
-		end
-		node = @head
-		return node if node.value == value
-		while (node = node.next)
-			return node if node.value == value
-		end
-		return false
+		target_node.next.next = prev_node_next
 	end
 
 	def delete(value)
