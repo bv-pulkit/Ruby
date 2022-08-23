@@ -2,7 +2,7 @@ require_relative 'bst_node.rb'
 
 class BinarySearchTree
 	attr_accessor :root, :data
-		
+
 	def initialize
 		@root = nil
 	end
@@ -57,7 +57,7 @@ class BinarySearchTree
 			current = current.left
 		end
 	end
-	
+
 	def preorder(store = [], current = @root)
 		return store if current.nil?
 		store << current.value
@@ -106,7 +106,7 @@ class BinarySearchTree
 		elsif value > current.value
 			delete(current, value, current.right)
 		else
-		#case 1 if node has no child
+			#case 1 if node has no child
 			if current.left.nil? && current.right.nil?
 				if value == @root.value
 					@root = nil
@@ -115,7 +115,7 @@ class BinarySearchTree
 				else
 					parent.right = nil
 				end
-		#case 2 if the node has a single child
+				#case 2 if the node has a single child
 			elsif current.left.nil?
 				if value == @root.value
 					@root = @root.right
@@ -132,7 +132,7 @@ class BinarySearchTree
 				else
 					parent.right = current.left
 				end
-		#case 3 if node has 2 childs
+				#case 3 if node has 2 childs
 			else
 				@minval = self.smallest(current)
 				temp = @minval.value
