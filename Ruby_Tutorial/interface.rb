@@ -7,13 +7,13 @@ ll = LinkedList.new()
 puts "Select your Data Structure. Type '1' for BST, '2' for LinkedList"
 ds_type = gets.to_i
 if ds_type == 1
-	puts "Enter your choice -- Type 0 to see all commands"
+	puts "Enter your choice -- Type #{ BinarySearchTree::Choice::HELP } to see all commands"
 	while (choice = gets.to_i)
 		begin
 			if BinarySearchTree::Choice::HELP == choice
 				puts "Commands -- Description"
 				BinarySearchTree::CHOICE_DESCRIPTION.each do |choice, desc|
-					puts "#{choice} -- #{desc}"
+					puts "#{ choice } -- #{ desc }"
 				end
 			elsif BinarySearchTree::Choice::INSERT == choice
 				puts "enter a value"
@@ -77,21 +77,21 @@ if ds_type == 1
 			else
 				puts "Invalid choice, Please try again"
 			end
-			puts "Enter new choice or type #{BinarySearchTree::Choice::QUIT} to exit"
+			puts "Enter new choice or type #{ BinarySearchTree::Choice::QUIT } to exit"
 		rescue => e 
 			puts e.message
-			puts "Enter new choice or type  #{BinarySearchTree::Choice::QUIT} to exit"
+			puts "Enter new choice or type  #{ BinarySearchTree::Choice::QUIT } to exit"
 		end
 	end
 
 elsif ds_type == 2
-	puts "Enter your choice -- Type 0 to see all commands"
+	puts "Enter your choice -- Type #{ LinkedList::Choice::HELP } to see all commands"
 	while (choice = gets.to_i)
 		begin
 			if LinkedList::Choice::HELP == choice
 				puts "Commands -- Description"
 				LinkedList::CHOICE_DESCRIPTION.each do |choice,desc|
-					puts "#{choice} -- #{desc}"
+					puts "#{ choice } -- #{ desc }"
 				end
 			elsif LinkedList::Choice::INSERT == choice
 				puts "enter a value"
@@ -100,7 +100,7 @@ elsif ds_type == 2
 			elsif LinkedList::Choice::INSERT_AFTER == choice
 				puts "Enter the target value you want to insert after"
 				target = gets.to_i
-				puts "Enter the value to want to insert"
+				puts "Enter the value you want to insert"
 				value = gets.to_i
 				ll.insert_after(target, value)
 			elsif LinkedList::Choice::SEARCH == choice
@@ -123,9 +123,9 @@ elsif ds_type == 2
 			else
 				puts "Invalid choice, Please try again"
 			end
-			puts "Enter new choice or type #{LinkedList::Choice::QUIT} to exit"
+			puts "Enter new choice or type #{ LinkedList::Choice::QUIT } to exit"
 		rescue
-			puts "Enter new choice or type  #{LinkedList::Choice::QUIT} to exit"
+			puts "Enter new choice or type  #{ LinkedList::Choice::QUIT } to exit"
 		end
 	end
 else

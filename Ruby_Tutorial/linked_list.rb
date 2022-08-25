@@ -56,7 +56,7 @@ class LinkedList
 			@head = @head.next
 			return
 		end
-		while(node.next)
+		while (node.next)
 			next_node = node.next
 			if next_node.value == value
 				node.next = next_node.next
@@ -88,15 +88,15 @@ class LinkedList
 	end
 
 	CHOICE_DESCRIPTION = {}
-	def self.add_choice_description(id,desc)
+	def self.add_choice_description(id, desc)
 		CHOICE_DESCRIPTION[id] = desc
 		id
 	end
 
 	module Choice
-		HELP = LinkedList.add_choice_description(0, "Type 0 to see all commands")
-		INSERT =  LinkedList.add_choice_description(1, "To insert a value")
-		INSERT_AFTER =  LinkedList.add_choice_description(2, "To insert a value after a specified target")
+		HELP = LinkedList.add_choice_description(0, "To to see all commands")
+		INSERT = LinkedList.add_choice_description(1, "To insert a value")
+		INSERT_AFTER = LinkedList.add_choice_description(2, "To insert a value after a specified target")
 		SEARCH = LinkedList.add_choice_description(3, "To search if an element is present")
 		REMOVE = LinkedList.add_choice_description(4, "To remove a specific element")
 		PRINT = LinkedList.add_choice_description(5, "To print all the elements of Linked List")
